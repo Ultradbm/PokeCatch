@@ -8,19 +8,42 @@ export class Pokemon extends Component {
         const pokemonDetails = await pokemonDetailsResponse.json();
         const speciesDetailsResponse = await fetch(pokemonDetails.species.url);
         const speciesDetails = await speciesDetailsResponse.json();
+
         console.log(pokemonDetails);
         console.log(speciesDetails);
 
+        const englishDescriptions = speciesDetails.flavor_text_entries.filter(
+            (entry) => {
+                return entry.language.name === "en";
+            }
+        );
+
+        const finalDataDictionary = {
+            name: pokemonDetails.name,
+            id: pokemonDetails.id,
+            image: pokemonDetails.sprites.front_default,
+            types: pokemonDetails.types.map((type) => {
+                return type.type.name;
+            }),
+            stats: pokemonDetails.stats,
+            description:
+                englishDescriptions[englishDescriptions.length - 1].flavor_text,
+        }
+
+        this.setState({ ...this.state, data: finalDataDictionary })
+
     }
+
 
     componentDidMount() {
         this.fetchData();
     }
 
 
+
     constructor(props) {
         super(props);
-        this.state = { isCaught: false};
+        this.state = { isCaught: false, data: null};
         //this.catch = this.catch.bind(this);
     }
 
@@ -32,9 +55,20 @@ export class Pokemon extends Component {
 
     render() {
         return (
-            <div className="pokemon-container" >
-                <div className="img-fluid"></div>
-                {this.props.name}
+            <div className="pokemon-outer" >
+                {this.state.data && (
+                    <div className="pokemon-container">
+                        <div className="pokemon-left">
+                        <div className="pokemon-img-container">
+                            <img src={this.state.data.image} />
+                        </div>
+                            <div className="pokemon-name">{this.state.data.name}</div>
+                        </div>
+                        <div className="pokemon-description">
+                            {this.state.data.description}
+                        </div>
+                     </div>
+                )}
             </div>
         );
     }
