@@ -33,9 +33,9 @@ export class PokeList extends Component {
         return (
             <div>
                 <h1>Browsing all Pokemon</h1>
-                {this.state.pokemonData.map((pokemon) => {
+                {this.state.pokemonData.map((pokemon, index) => {
                     return (
-                        <Pokemon name={pokemon.name} url={pokemon.url} />
+                        <Pokemon key={index + "-" + pokemon.name} name={pokemon.name} url={pokemon.url} />
                         )
 
                 })}

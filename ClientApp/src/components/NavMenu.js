@@ -37,12 +37,6 @@ export class NavMenu extends Component {
                 <NavItem>
                   <NavLink tag={Link} className="text-light" to="/pokemon">Pokemon</NavLink>
                 </NavItem>
-                <NavItem>
-                  <NavLink tag={Link} className="text-light" to="/counter">Counter</NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={Link} className="text-light" to="/fetch-data">Fetch data</NavLink>
-                </NavItem>
                 <LoginMenu>
                 </LoginMenu>
               </ul>

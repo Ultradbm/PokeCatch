@@ -9,9 +9,6 @@ export class Pokemon extends Component {
         const speciesDetailsResponse = await fetch(pokemonDetails.species.url);
         const speciesDetails = await speciesDetailsResponse.json();
 
-        console.log(pokemonDetails);
-        console.log(speciesDetails);
-
         const englishDescriptions = speciesDetails.flavor_text_entries.filter(
             (entry) => {
                 return entry.language.name === "en";
@@ -44,14 +41,12 @@ export class Pokemon extends Component {
     constructor(props) {
         super(props);
         this.state = { isCaught: false, data: null};
-        //this.catch = this.catch.bind(this);
+        this.catch = this.catch.bind(this);
     }
 
-    //catch() {
-    //    this.setState({
-    //        currentCount: this.state.currentCount + 1
-    //    });
-    //}
+    catch() {
+        console.log(this.state.data.name + " caught");
+    }
 
     render() {
         return (
@@ -60,12 +55,15 @@ export class Pokemon extends Component {
                     <div className="pokemon-container">
                         <div className="pokemon-left">
                         <div className="pokemon-img-container">
-                            <img src={this.state.data.image} />
+                            <img alt={"Image of " + this.state.data.name} src={this.state.data.image} />
                         </div>
                             <div className="pokemon-name">{this.state.data.name}</div>
                         </div>
                         <div className="pokemon-description">
                             {this.state.data.description}
+                        </div>
+                        <div className="pokeball-container">
+                            <img alt={"Catch this Pokemon!"} onClick={this.catch } className="pokeball" src="https://pixelartmaker-data-78746291193.nyc3.digitaloceanspaces.com/image/bd571ae3cac22f6.png"/>
                         </div>
                      </div>
                 )}
